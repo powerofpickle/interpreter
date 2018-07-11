@@ -231,12 +231,7 @@ std::string RealDirectory::type(){
 }
 
 std::vector<std::string> RealDirectory::list_children_names(){
-  std::vector<std::string> r;
-  for (auto& p : fs::directory_iterator(this->path)){
-    r.push_back(p.path().filename().string());
-  }
-
-  return r;
+  return FileUtil::list_directory(this->path);
 }
 
 

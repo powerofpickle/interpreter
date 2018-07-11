@@ -6,20 +6,19 @@
 #include "program.h"
 #include <string>
 #include <vector>
+#include "platform.h"
 
 class Main : public Program{
 public:
   void run(){
     vfs->out(vfs->get_string("args/0"));
-    std::cout << std::endl << std::endl;
-    vfs->out(".");
   }
 };
 
 
 int main(int argc, char** argv){
 
-  RealDirectory root("/");
+  RealDirectory root(ROOT_PATH);
   VirtualVirtualLink root_link(&root, std::vector<std::string>());
   VFS::global.set_child("/", &root_link);
 

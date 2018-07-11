@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "node.h"
 
 namespace FileUtil{
@@ -9,6 +10,7 @@ namespace FileUtil{
   const int DIRECTORY = 2;
 
   int path_status(std::string path);
+  std::vector<std::string> list_directory(std::string path);
   std::string& read_file(std::string path, std::string& dest);
   int write_file(std::string path, std::string& data);
   Node* node_at(std::string path);

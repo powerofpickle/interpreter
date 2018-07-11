@@ -9,7 +9,31 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+
+namespace fs = std::filesystem;
+
 int FileUtil::path_status(std::string path){
+  //std::cout << path << " is being checked!" << std::endl;
+  fs::file_status status;
+  try {
+    status = fs::status(path);
+  }
+  catch (std::exception e) {
+    //std::cout << "Exception when checking status of " << path << std::endl;
+    return NOT_FOUND;
+  }
+  if (fs::is_regular_file(status))
+      return FILE;
+  if (fs::is_directory(status))
+      return DIRECTORY;
+  if (fs::exists(status)) {
+      //std::cout << path << " exists but isn't a directory or a file!" << std::endl;
+      return NOT_FOUND;
+  }
+
+  //std::cout << path << " does not exist!" << std::endl;
+  return NOT_FOUND;
+  /*
   struct stat stat_info;
   if(stat(path.c_str(), &stat_info) == 0){
     if(stat_info.st_mode & S_IFDIR){
@@ -24,6 +48,16 @@ int FileUtil::path_status(std::string path){
   }
   std::cout << "NOT FOUND" << std::endl;
   return NOT_FOUND;
+  */
+}
+
+std::vector<std::string> FileUtil::list_directory(std::string path) {
+	std::vector<std::string> r;
+	for (auto& p : fs::directory_iterator(path)) {
+		r.push_back(p.path().filename().string());
+	}
+
+	return r;
 }
 
 std::string& FileUtil::read_file(std::string path, std::string& dest){
@@ -44,7 +78,7 @@ Node* FileUtil::node_at(std::string path){
   int file_stat = FileUtil::path_status(path);
   switch(file_stat){
     case FileUtil::NOT_FOUND:
-      //std::cout << new_path << " does not exist!" << std::endl;
+      std::cout << path << " does not exist!" << std::endl;
       break;
     case FileUtil::FILE:
       //std::cout << new_path << " is a file!" << std::endl;
