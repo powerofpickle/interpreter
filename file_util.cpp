@@ -8,7 +8,6 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
 int FileUtil::path_status(std::string path){
   struct stat stat_info;
