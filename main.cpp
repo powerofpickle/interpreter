@@ -23,8 +23,6 @@ int main(int argc, char** argv){
   VirtualVirtualLink root_link(&root, std::vector<std::string>());
   VFS::global.set_child("/", &root_link);
 
-
-
   std::vector<Node*> args;
   for(int i = 1; i < argc; i++){
     args.push_back(new VirtualFile(argv[i]));

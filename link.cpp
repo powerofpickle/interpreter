@@ -28,6 +28,11 @@ Node* VirtualVirtualLink::resolve(){
   return r;
 }
 
+bool VirtualVirtualLink::assign(Node* n){
+  vfs->set_node(path, n);
+  return false;
+}
+
 //VirtualRealLink
 VirtualRealLink::VirtualRealLink(std::string path){
   this->path = path;

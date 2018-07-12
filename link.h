@@ -14,6 +14,7 @@ public:
   Node* add_to_vdir(VirtualDirectory* dir, std::string name);
   Node* add_to_dir(RealDirectory* dir, std::string name);
   Node* resolve();
+  bool assign(Node* n);
 };
 
 class VirtualRealLink : public Node{

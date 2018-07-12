@@ -21,6 +21,8 @@ public:
   virtual Node* get_node(std::vector<std::string> path);
   virtual Node* set_node(std::vector<std::string> path, Node* node);
 
+  virtual int num_children();
+
   virtual void fill_stack(std::stack<Node*> &stack);
   bool is_dir();
 };
@@ -29,6 +31,7 @@ class VirtualDirectory : public Directory{
 private:
 public:
   std::map<std::string, Node*> children;
+  int num_children();
   std::vector<std::string> list_children_names();
   Node* set_child(std::string name, Node* node);
   Node* get_child(std::string name);

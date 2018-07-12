@@ -50,7 +50,12 @@ bool Directory::is_dir(){
   return true;
 }
 
+int Directory::num_children(){
+  return -1;
+}
+
 Node* Directory::get_node(std::vector<std::string> path){
+
   std::stack<Node*> stack;
   Node* n = this;
   int i;
@@ -65,8 +70,10 @@ Node* Directory::get_node(std::vector<std::string> path){
       n = this;
     }else{
       stack.push(n);
+
       n = ((Directory*)n)->get_child(path[i]);
     }
+
     if(n == nullptr){
       std::cout << "Error: " << path[i] << " not found!" << std::endl;
       break;
@@ -78,6 +85,7 @@ Node* Directory::get_node(std::vector<std::string> path){
       }
     }
   }
+
   return n;
 
 /*
@@ -139,6 +147,10 @@ Node* Directory::set_node(std::vector<std::string> path, Node* node){
       std::cout << "Error: " << path[i] << " is not a directory!" << std::endl;
     }
   }
+  Node* existing = ((Directory*)n)->get_child(path[i]);
+  if(existing != nullptr && (existing->assign(node) == false)){
+    return existing->resolve();
+  }
   return ((Directory*)n)->set_child(path[i], node);
 
 /*
@@ -166,6 +178,10 @@ Node* Directory::set_node(std::vector<std::string> path, Node* node){
 }
 
 //VirtualDirectory
+int VirtualDirectory::num_children(){
+  return children.size();
+}
+
 std::vector<std::string> VirtualDirectory::list_children_names(){
   std::vector<std::string> r;
   for( const auto& pair : children ){
@@ -176,12 +192,16 @@ std::vector<std::string> VirtualDirectory::list_children_names(){
 
 
 Node* VirtualDirectory::set_child(std::string name, Node* node){
-  std::cout << "Child " << name << " being set!" << std::endl;
+  Node* n = get_child(name);
+  if(n != nullptr){
+    delete n;
+  }
   return node->add_to_vdir(this, name);
 }
 
 Node* VirtualDirectory::get_child(std::string name){
-
+  if(children.find(name) == children.end())
+    return nullptr;
   return children[name];
 }
 

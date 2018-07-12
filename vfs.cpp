@@ -25,9 +25,11 @@ If it fails, tries global directory
 
 Node* VFS::get_child(std::string name){
   Node* n = VirtualDirectory::get_child(name);
+
   if(n == nullptr){
     n = global.get_child(name);
   }
+
   return n;
 }
 
@@ -47,6 +49,9 @@ void VFS::set_string(std::string path, std::string value){
 
 std::string VFS::get_string(std::string path){
   Node* n = get_node(split_path(path));
+  if(n == nullptr){
+    return "";
+  }
   return ((File*)n)->get();
 }
 

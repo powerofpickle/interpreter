@@ -12,3 +12,8 @@ bool Node::is_dir(){
 Node* Node::resolve(){
   return this;
 }
+
+//returns true if should be deleted and replaced
+bool Node::assign(Node* n){
+  return true;
+}
