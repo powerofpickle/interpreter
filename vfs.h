@@ -11,8 +11,11 @@ class VFS : public VirtualDirectory{
 private:
   std::stack<Node*> directory_stack;
   VirtualRealLink* real_link = nullptr;
+  int ref_count = 0;
 public:
   static VirtualDirectory global;
+  static void inc_ref(VFS* vfs);
+  static void dec_ref(VFS* vfs);
   VFS(std::string real_parent_dir);
   VFS(std::stack<Node*> directory_stack);
   Node* get_child(std::string name);

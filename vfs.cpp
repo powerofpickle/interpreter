@@ -7,6 +7,17 @@ std::stack<Node*> temp_directory_stack;
 
 VirtualDirectory VFS::global;
 
+void VFS::inc_ref(VFS* vfs) {
+  vfs->ref_count++;
+}
+
+void VFS::dec_ref(VFS* vfs) {
+  vfs->ref_count--;
+  if (vfs->ref_count == 0) {
+    std::cout << "Deallocating VFS" << std::endl;
+  }
+}
+
 
 VFS::VFS(std::string real_parent_dir){
   real_link = new VirtualRealLink(real_parent_dir);
