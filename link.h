@@ -14,6 +14,8 @@ public:
   Node* add_to_vdir(VirtualDirectory* dir, std::string name);
   Node* add_to_dir(RealDirectory* dir, std::string name);
   Node* resolve();
+  File* resolve_file();
+  Directory* resolve_dir();
   bool assign(Node* n);
 };
 

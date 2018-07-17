@@ -25,7 +25,17 @@ Node* VirtualVirtualLink::add_to_dir(RealDirectory* dir, std::string name){
 
 Node* VirtualVirtualLink::resolve(){
   Node* r = vfs->get_node(path);
-  return r;
+  return r->resolve();
+}
+
+Directory* VirtualVirtualLink::resolve_dir(){
+  Node* r = vfs->get_node(path);
+  return r->resolve_dir();
+}
+
+File* VirtualVirtualLink::resolve_file(){
+  Node* r = vfs->get_node(path);
+  return r->resolve_file();
 }
 
 bool VirtualVirtualLink::assign(Node* n){

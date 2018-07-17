@@ -11,6 +11,18 @@
 
 namespace fs = std::filesystem;
 
+std::vector<std::string> Directory::list_children_names(){
+	return std::vector<std::string>();
+}
+
+Directory* Directory::resolve_dir(){
+	return this;
+}
+
+Node* Directory::set_child(std::string, Node* node){
+	return node;
+}
+
 void Directory::print_children_names(){
   std::vector<std::string> names = list_children_names();
   for(std::string name : names){
@@ -60,9 +72,10 @@ Node* Directory::get_node(std::vector<std::string> path){
   Node* n = this;
   int i;
   for(i = 0; i < path.size(); i++){
+    Directory* d = n->resolve_dir();
     if(path[i] == ".."){
       if(stack.empty()){
-        ((Directory*)n)->fill_stack(stack);
+        d->fill_stack(stack);
       }
       n = stack.top();
       stack.pop();
@@ -71,19 +84,14 @@ Node* Directory::get_node(std::vector<std::string> path){
     }else{
       stack.push(n);
 
-      n = ((Directory*)n)->get_child(path[i]);
+      n = d->get_child(path[i]);
     }
 
     if(n == nullptr){
       std::cout << "Error: " << path[i] << " not found!" << std::endl;
       break;
     }
-    if(i < (path.size() - 1)){
-      n = n->resolve();
-      if(n->is_dir() == false){
-        std::cout << "Error: " << path[i] << " is not a directory!" << std::endl;
-      }
-    }
+    
   }
 
   return n;
@@ -142,10 +150,7 @@ Node* Directory::set_node(std::vector<std::string> path, Node* node){
       VirtualDirectory vd;
       n = ((Directory*)prev)->set_child(path[i], &vd);
     }
-    n = n->resolve();
-    if(n->is_dir() == false){
-      std::cout << "Error: " << path[i] << " is not a directory!" << std::endl;
-    }
+    n = n->resolve_dir();
   }
   Node* existing = ((Directory*)n)->get_child(path[i]);
   if(existing != nullptr && (existing->assign(node) == false)){
