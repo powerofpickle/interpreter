@@ -1,5 +1,0 @@
-﻿  directory.cpp
-c:\users\coleman\documents\interpreter\directory.cpp(62): warning C4018: '<': signed/unsigned mismatch
-c:\users\coleman\documents\interpreter\directory.cpp(81): warning C4018: '<': signed/unsigned mismatch
-c:\users\coleman\documents\interpreter\directory.cpp(127): warning C4018: '<': signed/unsigned mismatch
-  Interpreter.vcxproj -> C:\Users\Coleman\Documents\interpreter\vs\Interpreter\Debug\Interpreter.exe
