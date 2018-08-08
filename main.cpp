@@ -8,6 +8,8 @@
 #include <vector>
 #include "platform.h"
 #include "http.h"
+#include "parser.h"
+#include "ast_expression.h"
 
 class Main : public Program{
 public:
@@ -18,6 +20,14 @@ public:
 
 
 int main(int argc, char** argv){
+  
+  Parser p;
+  Parser::from_file(p, "sample.code");
+  std::cout << p.text << std::endl;
+  ast::ExpressionList el;
+  el.parse(&p);
+  
+
 
   RealDirectory root(ROOT_PATH);
   VirtualVirtualLink root_link(&root, std::vector<std::string>());

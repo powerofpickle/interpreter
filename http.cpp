@@ -2,8 +2,6 @@
 #include <string>
 #include "node.h"
 #include "http.h"
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
 
 
 HTTPNode::HTTPNode(){

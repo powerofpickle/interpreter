@@ -1,5 +1,5 @@
 
-OBJS = main node directory file link file_util vfs program http
+OBJS = main node directory file link file_util vfs program http parser ast_expression
 OBJS := $(patsubst %, build/%.o, $(OBJS))
 
 build/%.o : %.cpp
